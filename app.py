@@ -60,4 +60,4 @@ if st.session_state.winner:
         st.session_state.movies = []
         st.session_state.step = 0
         st.session_state.winner = None
-        st.experimental_rerun()
+        st.rerun()
