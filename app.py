@@ -13,6 +13,8 @@ if "step" not in st.session_state:
     st.session_state.step = 0
 if "winner" not in st.session_state:
     st.session_state.winner = None
+if "trigger_rerun" not in st.session_state:
+    st.session_state.trigger_rerun = False
 
 # --- Initial movie input ---
 if not st.session_state.movies and not st.session_state.winner:
@@ -25,7 +27,12 @@ if not st.session_state.movies and not st.session_state.winner:
         else:
             st.session_state.movies = films
             st.session_state.step = 1
-            st.rerun() 
+            st.session_state.trigger_rerun = True
+
+# --- Trigger rerun safely ---
+if st.session_state.trigger_rerun:
+    st.session_state.trigger_rerun = False
+    st.rerun()
 
 # --- Elimination process ---
 elif st.session_state.movies and not st.session_state.winner:
@@ -49,7 +56,8 @@ elif st.session_state.movies and not st.session_state.winner:
     if len(shuffled) == 1:
         st.session_state.winner = shuffled[0]
     else:
-        st.button("➡️ Next Step", on_click=lambda: st.rerun())
+        if st.button("➡️ Next Step"):
+            st.session_state.trigger_rerun = True
 
 # --- Final winner display ---
 if st.session_state.winner:
@@ -60,4 +68,4 @@ if st.session_state.winner:
         st.session_state.movies = []
         st.session_state.step = 0
         st.session_state.winner = None
-        st.rerun()
+        st.session_state.trigger_rerun = True
