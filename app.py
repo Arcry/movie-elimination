@@ -25,7 +25,7 @@ if not st.session_state.movies and not st.session_state.winner:
         else:
             st.session_state.movies = films
             st.session_state.step = 1
-            st.rerun()  # ✅ safer than experimental_rerun
+            st.rerun() 
 
 # --- Elimination process ---
 elif st.session_state.movies and not st.session_state.winner:
@@ -49,7 +49,7 @@ elif st.session_state.movies and not st.session_state.winner:
     if len(shuffled) == 1:
         st.session_state.winner = shuffled[0]
     else:
-        st.button("➡️ Next Step", on_click=lambda: st.experimental_rerun())
+        st.button("➡️ Next Step", on_click=lambda: st.rerun())
 
 # --- Final winner display ---
 if st.session_state.winner:
